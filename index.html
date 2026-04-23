@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEG La Revancha — Torneo</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #2f1114;
+            --accent-gold: #c8a84b;
+            --text-primary: #e8e0d0;
+        }
+
+        body {
+            background: var(--bg-main);
+            font-family: 'Crimson Pro', serif;
+            color: var(--text-primary);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold);
+        }
+
+        .player-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 6px;
+        }
+
+        .churchill { background: rgba(13, 42, 92, 0.5); }
+        .putin { background: rgba(0, 0, 0, 0.5); }
+        .sanmartin { background: rgba(255, 255, 255, 0.6); color: black; }
+        .kim { background: rgba(255, 215, 0, 0.6); color: black; }
+
+        .fecha-card {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .position-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            margin: 6px 0;
+        }
+
+        .position-row select {
+            flex: 2;
+            height: 30px;
+            box-sizing: border-box;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .field-group label {
+            font-size: 11px;
+            color: rgba(232, 224, 208, 0.6);
+            margin-bottom: 3px;
+            white-space: nowrap;
+        }
+
+        .field-group input[type="number"] {
+            width: 100%;
+            height: 30px;
+            background: #1a1c24;
+            color: white;
+            border: 1px solid #333;
+            padding: 0 5px;
+            font-family: 'Crimson Pro', serif;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .field-group input[type="number"]:focus {
+            outline: none;
+            border: 1px solid #c8a84b;
+        }
+
+        select {
+            width: 100%;
+            margin: 0;
+            background: #1a1c24;
+            color: white;
+            border: 1px solid #333;
+            padding: 5px;
+        }
+
+        button {
+            margin: 10px 5px;
+            padding: 8px 12px;
+            background: rgba(200,168,75,0.1);
+            border: 1px solid rgba(200,168,75,0.3);
+            color: var(--accent-gold);
+            cursor: pointer;
+        }
+
+        /* 📅 DATE INPUT DARK MODE */
+        input[type="date"] {
+            background: #0f1117;
+            color: #e8e0d0;
+            border: 1px solid #333;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-family: 'Crimson Pro', serif;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        input[type="date"]:focus {
+            outline: none;
+            border: 1px solid #c8a84b;
+            background: #0f1117;
+        }
+
+        /* IMÁGENES */
+        .side-images {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .left { left: 10px; }
+        .right { right: 10px; }
+
+        .image-block {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .image-block img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .quote {
+            font-size: 20px;
+            margin-top: 6px;
+            color: #ddd;
+            font-style: italic;
+        }
+
+        #final-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        #final-content {
+            text-align: center;
+            color: white;
+        }
+
+        .winner img {
+            width: 220px;
+            height: 220px;
+            border-radius: 15px;
+        }
+
+        .others {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .others img {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="side-images left">
+        <div class="image-block">
+            <img src="churchill.jpg">
+            <div class="quote">-"Success is not final, failure is not fatal."-</div>
+        </div>
+        <div class="image-block">
+            <img src="kim.jpg">
+            <div class="quote">-"We have nothing to envy in the world."-</div>
+        </div>
+    </div>
+
+    <div class="side-images right">
+        <div class="image-block">
+            <img src="sanmartin.jpg">
+            <div class="quote">-"Serás lo que debas ser o no serás nada."-</div>
+        </div>
+        <div class="image-block">
+            <img src="putin.jpg">
+            <div class="quote">-"The weak are beaten."-</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>⚔ TEG LA REVANCHA ⚔</h1>
+            <h2>EL SUEÑO DE CONSQUISTAR EL MUNDO SE RENUEVA</h2>
+            <h3>TORNEO — 4 FECHAS</h3>
+        </div>
+
+        <div id="standings"></div>
+        <div id="fecha-grid"></div>
+
+        <div style="text-align:center;">
+            <button onclick="resetAll()">REINICIAR TORNEO</button>
+            <button onclick="finalizarTorneo()">FINALIZAR TORNEO</button>
+        </div>
+    </div>
+
+    <div id="final-screen">
+        <div id="final-content"></div>
+    </div>
+
+    <script>
+
+        const PLAYERS = [
+            { id: 0, name: 'Winston Churchill', class: 'churchill' },
+            { id: 1, name: 'Vladimir Putin', class: 'putin' },
+            { id: 2, name: 'San Martín', class: 'sanmartin' },
+            { id: 3, name: 'Kim Jong-un', class: 'kim' }
+        ];
+
+        const PTS = [3,2,1,0];
+
+        let state = {
+            fechas: Array.from({length:4},()=>({
+                date:"",
+                posiciones: Array(4).fill(null),
+                paisesTotales: Array(4).fill(""),
+                paisesObjetivo: Array(4).fill("")
+            }))
+        };
+
+        function getImage(name){
+            if(name.includes("Churchill")) return "churchill.jpg";
+            if(name.includes("Putin")) return "putin.jpg";
+            if(name.includes("San")) return "sanmartin.jpg";
+            if(name.includes("Kim")) return "kim.jpg";
+        }
+
+        function calcStandings(){
+            return PLAYERS.map(p=>{
+                let total=0;
+                state.fechas.forEach(f=>{
+                    let pos=f.posiciones.indexOf(p.id);
+                    if(pos!==-1) total+=PTS[pos];
+                });
+                return {...p,total};
+            }).sort((a,b)=>b.total-a.total);
+        }
+
+        function renderStandings(){
+            const s=calcStandings();
+            document.getElementById("standings").innerHTML=
+                s.map((p,i)=>`
+                    <div class="player-row ${p.class}">
+                        <div>${i+1}</div>
+                        <div>${p.name}</div>
+                        <div>${p.total}</div>
+                    </div>
+                `).join("");
+        }
+
+        function renderFechas(){
+            document.getElementById("fecha-grid").innerHTML=
+                state.fechas.map((f,fi)=>`
+                    <div class="fecha-card">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                            <b>Fecha ${fi+1}</b>
+                            <input type="date" value="${f.date}" onchange="setDate(${fi}, this.value)">
+                        </div>
+
+                        ${f.posiciones.map((pid,pos)=>`
+                            <div class="position-row">
+                                <select onchange="onSelect(${fi},${pos},this.value)">
+                                    <option value="">-</option>
+                                    ${PLAYERS.map(p=>`
+                                        <option value="${p.id}" ${pid==p.id?'selected':''}>
+                                            ${p.name}
+                                        </option>
+                                    `).join("")}
+                                </select>
+
+                                <div class="field-group">
+                                    <label>Países totales</label>
+                                    <input type="number" min="0"
+                                        value="${f.paisesTotales[pos]}"
+                                        onchange="onPaisesTotales(${fi},${pos},this.value)">
+                                </div>
+
+                                <div class="field-group">
+                                    <label>Países del objetivo</label>
+                                    <input type="number" min="0"
+                                        value="${f.paisesObjetivo[pos]}"
+                                        onchange="onPaisesObjetivo(${fi},${pos},this.value)">
+                                </div>
+                            </div>
+                        `).join("")}
+
+                        <button onclick="saveFecha()">Guardar</button>
+                    </div>
+                `).join("");
+        }
+
+        function setDate(fi,value){
+            state.fechas[fi].date=value;
+        }
+
+        function onSelect(fi,pos,val){
+            state.fechas[fi].posiciones[pos]=val===""?null:parseInt(val);
+        }
+
+        function onPaisesTotales(fi,pos,val){
+            state.fechas[fi].paisesTotales[pos]=val;
+        }
+
+        function onPaisesObjetivo(fi,pos,val){
+            state.fechas[fi].paisesObjetivo[pos]=val;
+        }
+
+        function saveFecha(){
+            renderStandings();
+            renderFechas();
+        }
+
+        function finalizarTorneo(){
+            const ranking = calcStandings();
+            const winner = ranking[0];
+            const others = ranking.slice(1);
+
+            document.getElementById("final-screen").style.display="flex";
+
+            document.getElementById("final-content").innerHTML=`
+                <div class="winner">
+                    <h1>🏆 GANADOR 🏆</h1>
+                    <h2>${winner.name}</h2>
+                    <img src="${getImage(winner.name)}">
+                    <h3>${winner.total} puntos</h3>
+                </div>
+
+                <div class="others">
+                    ${others.map(p=>`
+                        <div>
+                            <img src="${getImage(p.name)}">
+                            <p>${p.name}</p>
+                            <p>${p.total} pts</p>
+                        </div>
+                    `).join("")}
+                </div>
+
+                <br>
+                <button onclick="location.reload()">Cerrar</button>
+            `;
+        }
+
+        function resetAll(){
+            if(confirm("¿Reiniciar torneo?")){
+                state={
+                    fechas:Array.from({length:4},()=>({
+                        date:"",
+                        posiciones:Array(4).fill(null),
+                        paisesTotales:Array(4).fill(""),
+                        paisesObjetivo:Array(4).fill("")
+                    }))
+                };
+                renderStandings();
+                renderFechas();
+            }
+        }
+
+        renderStandings();
+        renderFechas();
+
+    </script>
+
+</body>
+</html>
