@@ -245,7 +245,7 @@
     <div class="container">
         <div class="header">
             <h1>⚔ TEG LA REVANCHA ⚔</h1>
-            <h2>EL SUEÑO DE CONSQUISTAR EL MUNDO SE RENUEVA</h2>
+            <h2>EL SUEÑO DE CONQUISTAR EL MUNDO SE RENUEVA</h2>
             <h3>TORNEO — 4 FECHAS</h3>
         </div>
 
@@ -333,6 +333,7 @@
 
                         ${f.posiciones.map((pid,pos)=>`
                             <div class="position-row">
+                                <p>${pos + 1}°</p>
                                 <select onchange="onSelect(${fi},${pos},this.value)">
                                     <option value="">-</option>
                                     ${PLAYERS.map(p=>`
