@@ -118,7 +118,6 @@
             cursor: pointer;
         }
 
-        /* 📅 DATE INPUT DARK MODE */
         input[type="date"] {
             background: #0f1117;
             color: #e8e0d0;
@@ -139,11 +138,13 @@
             background: #0f1117;
         }
 
-        /* IMÁGENES */
+        /* IMÁGENES LATERALES */
         .side-images {
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
+            z-index: 0;
+            pointer-events: none;
         }
 
         .left { left: 10px; }
@@ -155,17 +156,27 @@
         }
 
         .image-block img {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             object-fit: cover;
             border-radius: 12px;
         }
 
         .quote {
-            font-size: 20px;
+            font-size: 13px;
             margin-top: 6px;
             color: #ddd;
             font-style: italic;
+            max-width: 180px;
+        }
+
+        @media (max-width: 1300px) {
+            .image-block img { width: 120px; height: 120px; }
+            .quote { font-size: 11px; max-width: 120px; }
+        }
+
+        @media (max-width: 1000px) {
+            .side-images { display: none; }
         }
 
         #final-screen {
