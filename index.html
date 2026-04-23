@@ -263,6 +263,16 @@
     </div>
 
     <script>
+        function saveToStorage(){
+            localStorage.setItem("tegTorneo", JSON.stringify(state));
+        }
+
+        function loadFromStorage(){
+            const data = localStorage.getItem("tegTorneo");
+            if(data){
+                state = JSON.parse(data);
+            }
+        }
 
         const PLAYERS = [
             { id: 0, name: 'Winston Churchill', class: 'churchill' },
@@ -355,23 +365,28 @@
 
         function setDate(fi,value){
             state.fechas[fi].date=value;
+            saveToStorage();
         }
 
         function onSelect(fi,pos,val){
             state.fechas[fi].posiciones[pos]=val===""?null:parseInt(val);
+            saveToStorage();
         }
 
         function onPaisesTotales(fi,pos,val){
             state.fechas[fi].paisesTotales[pos]=val;
+            saveToStorage();
         }
 
         function onPaisesObjetivo(fi,pos,val){
             state.fechas[fi].paisesObjetivo[pos]=val;
+            saveToStorage();
         }
 
         function saveFecha(){
             renderStandings();
             renderFechas();
+            saveToStorage();
         }
 
         function finalizarTorneo(){
@@ -406,6 +421,7 @@
 
         function resetAll(){
             if(confirm("¿Reiniciar torneo?")){
+                localStorage.removeItem("tegTorneo");
                 state={
                     fechas:Array.from({length:4},()=>({
                         date:"",
@@ -419,9 +435,9 @@
             }
         }
 
+        loadFromStorage();
         renderStandings();
         renderFechas();
-
     </script>
 
 </body>
